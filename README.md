@@ -34,3 +34,8 @@ sail npm run dev
 `sail artisan migrate:fresh --seed`
 
 # Deployment
+
+run just once `git remote add live jerry@mybud.nz:~/repo/application.git`
+
+`git push live main:master`
+`rsync -avhl public/build/ jerry@mybud.nz:/container/application/public/build/`
