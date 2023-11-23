@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-green {
+        @apply text-white px-3 py-1.5 font-medium bg-green-600 rounded hover:bg-green-700 text-center text-sm
+    }
+
+    .btn-blue {
+        @apply text-white px-3 py-1.5 font-medium bg-blue-600 rounded hover:bg-blue-700 text-center text-sm
+    }
+
+    .btn-hollow-blue {
+        @apply text-blue-500 block px-3 py-1 border border-blue-700 rounded hover:bg-gray-50
+    }
+
+    .btn-submit {
+        @apply text-white bg-blue-700 hover:bg-blue-800 font-medium rounded text-sm w-full sm:w-auto px-3 py-1.5 text-center
+    }
+    .btn-cancel {
+        @apply text-white bg-red-400 hover:bg-red-500 font-medium rounded text-sm w-full sm:w-auto px-3 py-1.5 text-center
+    }
+
+    .form-label {
+        @apply text-gray-600 block mb-1 text-base font-semibold
+    }
+}
