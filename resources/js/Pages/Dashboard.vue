@@ -1,7 +1,6 @@
 <template>
     <Head title="Dashboard" />
 
-    <AuthenticatedLayout>
         <div>
             <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
             Create Trip
@@ -40,7 +39,9 @@
                     <th class="py-4">
                     Comments
                     </th>
-                    <th />
+                    <th class="py-4">
+                        Actions
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -81,26 +82,24 @@
                     {{ trip.comment }}
                     </td>
                     <td class="pl-1">
-                    <span
-                        class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
-                        @click="Inertia.get(route('trips.edit', trip.id))"
-                    ><i class="fas fa-calendar-edit" /></span>
-                    <span
-                        class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
-                        @click="cancelTrip(trip)"
-                    >
-                        <i class="fas fa-plane-slash" /></span>
+                        <span
+                            class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
+                            @click="router.get(route('trips.edit', trip.id))"
+                        ><i class="fas fa-calendar-edit" /></span>
+                        <span
+                            class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
+                            @click="cancelTrip(trip)"
+                        >
+                            <i class="fas fa-plane-slash" /></span>
                     </td>
                 </tr>
                 </tbody>
             </table>
             </div>
         </div>
-    </AuthenticatedLayout>
 </template>
 
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue'
 import axios from 'axios'

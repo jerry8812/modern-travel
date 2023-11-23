@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mx-auto">
+  <div>
     <p class="mb-6 text-2xl font-semibold">
       Create a Trip
     </p>
@@ -166,7 +166,7 @@
         <button type="button" class="btn-submit" @click="saveTrip">
           Submit
         </button>
-        <button type="button" class="btn-cancel" @click="router.get(route('trips'))">
+        <button type="button" class="btn-cancel" @click="router.get(route('dashboard'))">
           Cancel
         </button>
       </div>

@@ -5,10 +5,17 @@
  */
 
 import axios from 'axios';
+import lodash from 'lodash'
+import axiosErrorInterceptor from '@/Helpers/errorHandling.js'
+
 window.axios = axios;
+window._ = lodash
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
+window.axios.interceptors.response.use(null, error => {
+  if (error.response && !error.config.NO_DEFAULT_ERROR_HANDLER) axiosErrorInterceptor(error.response.status, error.response.data)
+  throw error // rethrow error to ensure any further promise chain is rejected.
+})
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

@@ -78,7 +78,7 @@ class TripController extends Controller
                 $day->save();
             }
         });
-        return \redirect(route('trips'));
+        return \redirect(route('dashboard'));
     }
 
     private function getTripFormLookups()
