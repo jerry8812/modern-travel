@@ -1,18 +1,18 @@
 <template>
-  <div class="mx-auto w-full">
-    <p class="mb-6 font-semibold text-2xl">
+  <div class="w-full mx-auto">
+    <p class="mb-6 text-2xl font-semibold">
       Create a Trip
     </p>
-    <div class="w-full border-2 border-slate-100 rounded-lg shadow-sm px-6 pt-3 pb-4">
+    <div class="w-full px-6 pt-3 pb-4 border-2 rounded-lg shadow-sm border-slate-100">
       <form class="mb-6 space-y-5">
-        <div class="w-full grid grid-cols-3 gap-6">
+        <div class="grid w-full grid-cols-3 gap-6">
           <div>
             <label for="start_date" class="form-label">Start Date <span class="text-red-500">*</span></label>
             <input
               id="start_date"
               v-model="tripForm.start_date"
               type="date"
-              class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full py-2 px-5"
+              class="w-full px-5 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg"
             >
           </div>
           <div>
@@ -21,7 +21,7 @@
               id="end_date"
               v-model="tripForm.end_date"
               type="date"
-              class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full py-2 px-5"
+              class="w-full px-5 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg"
             >
           </div>
           <div>
@@ -31,11 +31,11 @@
               v-model="tripForm.amount_of_people"
               type="number"
               min="0"
-              class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full py-2 px-5"
+              class="w-full px-5 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg"
             >
           </div>
         </div>
-        <div class="w-full grid grid-cols-3 gap-6">
+        <div class="grid w-full grid-cols-3 gap-6">
           <div>
             <label for="source" class="form-label">Source</label>
             <input
@@ -65,7 +65,7 @@
             >
           </div>
         </div>
-        <div class="w-full grid grid-cols-3 gap-6">
+        <div class="grid w-full grid-cols-3 gap-6">
           <div>
             <label for="tour_guide" class="form-label">Tour Guide</label>
             <SimpleSelect
@@ -89,10 +89,10 @@
           </div>
         </div>
 
-        <span class="form-label block mb-3">Trip Details <span class="text-red-500">*</span></span>
-        <div v-if="tripForm.trip_days.length" class="max-h-96 overflow-auto">
-          <table class="shadow-md w-full text-sm text-left text-gray-500 rounded">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-200 sticky top-0">
+        <span class="block mb-3 form-label">Trip Details <span class="text-red-500">*</span></span>
+        <div v-if="tripForm.trip_days.length" class="overflow-auto max-h-96">
+          <table class="w-full text-sm text-left text-gray-500 rounded shadow-md">
+            <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
                 <th class="px-3 py-3">
                   Day
@@ -166,7 +166,7 @@
         <button type="button" class="btn-submit" @click="saveTrip">
           Submit
         </button>
-        <button type="button" class="btn-cancel" @click="Inertia.get(route('trips'))">
+        <button type="button" class="btn-cancel" @click="router.get(route('trips'))">
           Cancel
         </button>
       </div>
@@ -176,7 +176,7 @@
 
 <script setup>
 import { watch, ref, onMounted } from 'vue'
-import { useForm } from '@inertiajs/inertia-vue3'
+import { useForm, router } from '@inertiajs/vue3'
 import { format, differenceInCalendarDays, addDays } from 'date-fns'
 import { debounce } from 'lodash'
 import { TRIP_BASE } from '@/constants.js'
@@ -184,7 +184,6 @@ import { TRIP_BASE } from '@/constants.js'
 import SimpleSelect from '@/Components/Common/SimpleSelect.vue'
 import axiosErrorInterceptor from '@/Helpers/errorHandling.js'
 import axios from 'axios'
-import { Inertia } from '@inertiajs/inertia'
 
 const props = defineProps({
   trip: Object,
