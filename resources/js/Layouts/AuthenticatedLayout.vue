@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -113,6 +112,8 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('tour-guide')" :active="route().current('tour-guide')"> Tour Guides </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('rental-car')" :active="route().current('rental-car')"> Rental Cars </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -142,7 +143,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="w-4/5 mx-auto mt-4 sm:w-10/12">
                 <slot />
             </main>
         </div>
