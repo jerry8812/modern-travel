@@ -1,102 +1,102 @@
 <template>
     <Head title="Dashboard" />
 
-        <div>
-            <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
-            Create Trip
-            </button>
-            <div class="mt-5 overflow-hidden border rounded-xl">
-            <table class="w-full text-sm text-left text-gray-500 shadow-md">
-                <thead class="text-white uppercase bg-[#34495e] sticky top-0 rounded">
-                <tr class="text-base">
-                    <th class="py-4 pl-2">
-                    trip number
-                    </th>
-                    <th class="py-4 pl-2">
-                    status
-                    </th>
-                    <th class="py-4 pl-2">
-                    start date
-                    </th>
-                    <th class="py-4 pl-2">
-                    end date
-                    </th>
-                    <th class="py-4 max-w-[7rem]">
-                    Tourists
-                    </th>
-                    <th class="py-4">
-                    total price
-                    </th>
-                    <th class="py-4 pl-2">
-                    source
-                    </th>
-                    <th class="py-4 pl-2">
-                    tour guide
-                    </th>
-                    <th class="py-4 pl-2">
-                    rental car
-                    </th>
-                    <th class="py-4">
-                    Comments
-                    </th>
-                    <th class="py-4">
-                        Actions
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr
-                    v-for="trip in trips"
-                    :key="trip.id"
-                    class="even:bg-gray-100 font-semibold hover:bg-orange-50 border-b border-gray-300 text-[15px]"
-                    :class="[trip.bgColour]"
-                >
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.trip_number }}
-                    </td>
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.status }}
-                    </td>
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.start_date }}
-                    </td>
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.end_date }}
-                    </td>
-                    <td class="py-4 text-left">
-                    {{ trip.amount_of_people }}
-                    </td>
-                    <td class="py-4 text-left">
-                    {{ formatNZCurrency(trip.total_price) }}
-                    </td>
-                    <td class="px-2 py-4">
-                    {{ trip.source }}
-                    </td>
-                    <td class="px-2 py-4">
-                    {{ trip.tourGuides }}
-                    </td>
-                    <td class="py-4 pl-4">
-                    {{ trip.rentalCars }}
-                    </td>
-                    <td class="py-4">
-                    {{ trip.comment }}
-                    </td>
-                    <td class="pl-1">
-                        <span
-                            class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
-                            @click="router.get(route('trips.edit', trip.id))"
-                        ><i class="fas fa-calendar-edit" /></span>
-                        <span
-                            class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
-                            @click="cancelTrip(trip)"
-                        >
-                            <i class="fas fa-plane-slash" /></span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            </div>
+    <div class="py-4">
+        <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
+        Create Trip
+        </button>
+        <div class="mt-5 overflow-hidden border rounded-xl">
+        <table class="w-full text-sm text-left text-gray-500 shadow-md">
+            <thead class="text-white uppercase bg-[#34495e] sticky top-0 rounded">
+            <tr class="text-base">
+                <th class="py-4 pl-2">
+                trip number
+                </th>
+                <th class="py-4 pl-2">
+                status
+                </th>
+                <th class="py-4 pl-2">
+                start date
+                </th>
+                <th class="py-4 pl-2">
+                end date
+                </th>
+                <th class="py-4 max-w-[7rem]">
+                Tourists
+                </th>
+                <th class="py-4">
+                total price
+                </th>
+                <th class="py-4 pl-2">
+                source
+                </th>
+                <th class="py-4 pl-2">
+                tour guide
+                </th>
+                <th class="py-4 pl-2">
+                rental car
+                </th>
+                <th class="py-4">
+                Comments
+                </th>
+                <th class="py-4">
+                    Actions
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+                v-for="trip in trips"
+                :key="trip.id"
+                class="even:bg-gray-100 font-semibold hover:bg-orange-50 border-b border-gray-300 text-[15px]"
+                :class="[trip.bgColour]"
+            >
+                <td class="px-2 py-4 text-left">
+                {{ trip.trip_number }}
+                </td>
+                <td class="px-2 py-4 text-left">
+                {{ trip.status }}
+                </td>
+                <td class="px-2 py-4 text-left">
+                {{ trip.start_date }}
+                </td>
+                <td class="px-2 py-4 text-left">
+                {{ trip.end_date }}
+                </td>
+                <td class="py-4 text-left">
+                {{ trip.amount_of_people }}
+                </td>
+                <td class="py-4 text-left">
+                {{ formatNZCurrency(trip.total_price) }}
+                </td>
+                <td class="px-2 py-4">
+                {{ trip.source }}
+                </td>
+                <td class="px-2 py-4">
+                {{ trip.tourGuides }}
+                </td>
+                <td class="py-4 pl-4">
+                {{ trip.rentalCars }}
+                </td>
+                <td class="py-4">
+                {{ trip.comment }}
+                </td>
+                <td class="pl-1">
+                    <span
+                        class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
+                        @click="router.get(route('trips.edit', trip.id))"
+                    ><i class="fas fa-calendar-edit" /></span>
+                    <span
+                        class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
+                        @click="cancelTrip(trip)"
+                    >
+                        <i class="fas fa-plane-slash" /></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
         </div>
+    </div>
 </template>
 
 <script setup>
