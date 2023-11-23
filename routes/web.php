@@ -31,9 +31,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Trips/Trips');
-    })->name('trips');
     Route::get('/rental-car', fn () => Inertia::render('RentalCars'))->name('rental-car');
     Route::get('/tour-guide', fn () => Inertia::render('TourGuides'))->name('tour-guide');
     Route::get('trips/create-trip', [TripController::class, 'createTrip'])->name('create-trip');
