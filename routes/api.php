@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')
+    ->name('api.')
+    ->group(function () {
+        Route::apiResource('trips', TripController::class)->only(['index', 'store', 'destroy', 'show', 'update']);
+        Route::get('trip/get-available-resources', [TripController::class, 'getAvailableResources'])->name('trips.get-available-resources');
+
+        Route::apiResource('tour-guides', TourGuideController::class)->only(['index', 'store', 'destroy', 'show', 'update']);
+    });
