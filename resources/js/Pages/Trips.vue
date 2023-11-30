@@ -1,7 +1,5 @@
 <template>
-    <Head title="Dashboard" />
-
-    <div class="py-4">
+    <PagePanel>
         <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
         Create Trip
         </button>
@@ -96,7 +94,7 @@
             </tbody>
         </table>
         </div>
-    </div>
+    </PagePanel>
 </template>
 
 <script setup>
@@ -104,6 +102,7 @@ import { Head, router } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 
+import PagePanel from '@/Components/Common/PagePanel.vue'
 import { uniq, filter } from 'lodash'
 import { confirmModal } from '@/Helpers/modals.js'
 import { formatNZCurrency } from '@/Helpers/helper.js'
