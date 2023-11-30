@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\TotalSalesGraphData;
 use App\Http\Controllers\Api\TourGuideController;
 use App\Http\Controllers\Api\TripController;
 use Illuminate\Http\Request;
@@ -27,4 +28,5 @@ Route::middleware('auth:sanctum')
         Route::get('trip/get-available-resources', [TripController::class, 'getAvailableResources'])->name('trips.get-available-resources');
 
         Route::apiResource('tour-guides', TourGuideController::class)->only(['index', 'store', 'destroy', 'show', 'update']);
+        Route::get('trip/get-sales-graph-data', TotalSalesGraphData::class)->name('dashboard.get-sales-graph-data');
     });
