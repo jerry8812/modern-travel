@@ -7,6 +7,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Modern Travel';
 
@@ -18,7 +19,7 @@ createInertiaApp({
         if (name.startsWith('Auth')) return page
 
         page.then((module) => {
-            module.default.layout = AuthenticatedLayout
+            module.default.layout = AppLayout
         })
 
         return page
