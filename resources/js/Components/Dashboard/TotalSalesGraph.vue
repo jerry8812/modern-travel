@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex items-center justify-between w-2/3 mb-4">
+        <div class="flex items-end justify-between w-2/3 mb-4">
             <GraphTimePicker :update-value-callback="refetchData" />
             <div><span class="font-semibold">Total Sales:</span> <span class="text-lg">{{ formatNZCurrency(totalSales) }}</span></div>
         </div>
