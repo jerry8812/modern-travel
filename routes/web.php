@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/rental-car', fn () => Inertia::render('RentalCars'))->name('rental-car');
     Route::get('/tour-guide', fn () => Inertia::render('TourGuides'))->name('tour-guide');
     Route::get('trips/create-trip', [TripController::class, 'createTrip'])->name('create-trip');
-    Route::resource('trips', TripController::class)->only(['update', 'store', 'update', 'edit']);
+    Route::resource('trips', TripController::class)->only(['update', 'store', 'update', 'edit', 'index']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

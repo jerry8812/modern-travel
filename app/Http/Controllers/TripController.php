@@ -25,6 +25,11 @@ class TripController extends Controller
         return Inertia::render('Trips/TripForm', $formData);
     }
 
+    public function index()
+    {
+        return Inertia::render('Trips');
+    }
+
     public function update(TripFormRequest $request, Trip $trip)
     {
         return $this->handleForm($request, $trip);
