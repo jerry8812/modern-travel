@@ -1,6 +1,20 @@
 <template>
     <div>
-        <div class="gap-8 items-ce lg:flex">
+        <div class="items-end gap-8 lg:flex">
+             <select
+                v-model="selectedTimePeriod"
+                class="text-sm text-gray-900 border border-gray-300 rounded-md py-1.5 font-semibold mr-4 max-h-10"
+                @change="setStartAndEndDate"
+            >
+                <option
+                    v-for="option in timePickerOptions"
+                    :key="option.id"
+                    :value="option.id"
+                >
+                    {{ option.value }}
+                </option>
+            </select>
+
             <div>
                 <label for="start_date" class="block mb-1">Start date</label>
                 <input
@@ -36,6 +50,15 @@ const props = defineProps({
     updateValueCallback: Function
 })
 
+const timePickerOptions = [
+    { id: 'last-3-months', value: 'Last 3 Months' },
+    { id: 'last-6-months', value: 'Last 6 Months' },
+    { id: 'last-year', value: 'Last Year' },
+    { id: 'custom-period', value: 'Custom period' }
+]
+
+const selectedTimePeriod = ref('custom-period')
+
 const startDate = ref(null)
 const endDate = ref(null)
 
@@ -51,18 +74,44 @@ const datesAreValid = computed(() => {
     return (dateCheckRegex.test(startDate.value) && dateCheckRegex.test(endDate.value) && (endDate.value >= startDate.value))
 })
 
+const setStartAndEndDate = () => {
+    const now = new Date()
+    endDate.value = formatDateToString(now)
+
+    if (selectedTimePeriod.value == 'custom-period') {
+        props.updateValueCallback(startDate.value, endDate.value)
+        return
+    }
+
+    switch (selectedTimePeriod.value) {
+        case 'last-3-months':
+            // set end date to be 30th of June of current year
+            startDate.value = formatDateToString(now.setMonth(now.getMonth() -3 ))
+            break
+
+        case 'last-6-months': // Last 6 months
+            // start date of 6 months prior to today
+            startDate.value = formatDateToString(now.setMonth(now.getMonth() -6 ))
+            break
+
+        case 'last-year': // Last 12 months
+        startDate.value = formatDateToString(now.setFullYear(now.getFullYear() -1 ))
+            break
+    }
+    props.updateValueCallback(startDate.value, endDate.value)
+}
+
 // function to take a date object and format it to the string yyyy-mm-dd
 const formatDateToString = (date) => format(date, 'yyyy-MM-dd')
 
 // when user types date in input field, change selected time period to 'Custom dates' and update comparison dates
 const onChange = () => {
+    selectedTimePeriod.value = 'custom-period'
     props.updateValueCallback(startDate.value, endDate.value)
 }
 
 // set initial values for start date and end date
 onMounted(() => {
-    const now = new Date()
-    endDate.value = formatDateToString(now)
-    props.updateValueCallback(startDate.value, endDate.value)
+    setStartAndEndDate()
 })
 </script>
