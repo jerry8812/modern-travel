@@ -35,7 +35,8 @@ sail npm run dev
 
 # Deployment
 
-run just once `git remote add live moderntravel@mybud.nz:~/repo/application.git`
+run just once 
+`git remote add live moderntravel@mybud.nz:~/repo/application.git`
 
 `git push live main:master`
 `rsync -avhl public/build/ moderntravel@mybud.nz:/container/application/public/build/`
