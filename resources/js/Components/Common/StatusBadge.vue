@@ -39,7 +39,7 @@ const props = defineProps({
 
 const stageData = {
     lead: {
-        colourClasses: 'bg-invicta-blue-50 text-invicta-blue-600',
+        colourClasses: 'bg-blue-50 text-blue-600',
         icon: 'fa-solid fa-signal-fair'
     },
     advice: {

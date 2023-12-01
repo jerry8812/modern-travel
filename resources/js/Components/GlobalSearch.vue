@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <ComboboxInput
-                    class="block w-full py-2 pl-10 pr-3 leading-5 placeholder-white bg-opacity-100 border border-transparent rounded-md bg-cyan-600 focus:border-white focus:bg-white focus:text-gray-900 focus:placeholder-gray-500 focus:outline-none focus:ring-white sm:text-sm"
+                    class="block w-full py-2 pl-10 pr-3 leading-5 placeholder-white bg-gray-500 bg-opacity-100 border border-transparent rounded-md focus:border-white focus:bg-white focus:text-gray-900 focus:placeholder-gray-500 focus:outline-none focus:ring-white sm:text-sm"
                     placeholder="Search"
                     @change="doGlobalSearch"
                 />
@@ -23,7 +23,7 @@
                 >
                     <li
                         class="px-3 py-1 text-sm leading-4 cursor-pointer"
-                        :class="{ 'bg-invicta-blue-100': active }"
+                        :class="{ 'bg-gray-100': active }"
                     >
                         <span>{{ item.name }} </span>
                     </li>

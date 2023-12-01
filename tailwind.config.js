@@ -15,8 +15,15 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                headings: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'modern-travel': {
+                    DEFAULT: '#8fd3f4',
+                }
+
+            }
         },
     },
 

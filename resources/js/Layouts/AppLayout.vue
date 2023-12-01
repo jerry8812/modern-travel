@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-full">
-        <Popover v-slot="{ open }" as="header" class="pb-24 bg-gradient-to-r from-sky-800 to-cyan-600">
+        <Popover v-slot="{ open }" as="header" class="pb-24 bg-gradient-to-r from-slate-700 to-gray-500">
             <div class="max-w-3xl px-4 mx-auto sm:px-6 lg:max-w-7xl lg:px-8">
                 <div class="relative flex flex-wrap items-center justify-center lg:justify-between">
                     <!-- Logo -->
@@ -98,7 +98,7 @@
                                 <div class="pt-3 pb-2">
                                     <div class="flex items-center justify-between px-4">
                                         <div>
-                                            <img class="w-auto h-8" src="/images/Invicta-Logo-dark.png" alt="Invicta Financial">
+                                            <img src="/images/logo_new.png" class="h-16 mr-3" alt="Modern Travel Logo">
                                         </div>
                                         <div class="-mr-2">
                                             <PopoverButton class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500">
