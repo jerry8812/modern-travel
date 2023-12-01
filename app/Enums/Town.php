@@ -10,7 +10,7 @@ enum Town: string
     case QUEENSTOWN  = 'Queenstown';
     case AUC         = 'Aucland';
     case ROTORUA     = 'Rotorua';
-    case LAKE_TAOPO  = 'Taopo';
+    case LAKE_TAUPO  = 'Taupo';
     case MT_COOK     = 'Mt Cook';
     case KAIKOURA    = 'Kaikoura';
     case OAMARU      = 'Oamaru';
