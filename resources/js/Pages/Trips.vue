@@ -3,6 +3,43 @@
         <title>Trips | Modern Travel</title>
     </Head>
     <PagePanel>
+        <div class="relative grid items-center gap-2 mb-8 lg:grid-cols-3 sm:gap-4">
+            <TextInput
+                v-model="filters.keyword"
+                theme="primary"
+                label="Filter Clients"
+                type="text"
+                placeholder="Keyword"
+                @input="keywordHasInput"
+            />
+            <!-- advisor dropdown select -->
+            <SelectDropdown
+                v-model="filters.client"
+                label="Client"
+                name="clientOptions"
+                :options="clientOptions"
+            />
+            <div class="absolute left-0 -bottom-10">
+                <CheckboxField id="is_from_tap" v-model:checked="filters.is_from_tap" theme="primary" label-right="Only clients imported from TAP" />
+            </div>
+        </div>
+        <div class="hidden sm:block">
+            <div class="border-b border-gray-200">
+                <div class="flex items-end justify-between">
+                    <nav class="mt-2 -mb-px space-x-8" aria-label="Tabs">
+                        <a
+                            v-for="tab in tabs"
+                            :key="tab"
+                            class="cursor-pointer"
+                            :class="[filters.currentTab == tab ? 'border-purple-500 text-purple-600' : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-0.5 px-1 text-sm font-medium']"
+                            @click="filters.currentTab = tab"
+                        >
+                            <span class="capitalize">{{ tab }}</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
         <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
         Create Trip
         </button>
@@ -102,7 +139,7 @@
 
 <script setup>
 import { Head, router } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 
 import PagePanel from '@/Components/Common/PagePanel.vue'
@@ -111,7 +148,19 @@ import { confirmModal } from '@/Helpers/modals.js'
 import { formatNZCurrency } from '@/Helpers/helper.js'
 import { differenceInDays } from 'date-fns'
 
+import TextInput from '@/Components/Common/Form/TextInput.vue'
+import SelectDropdown from '@/Components/Common/Form/SelectDropdown.vue'
+
 const trips = ref([])
+const clientOptions = ref([])
+
+const tabs = ['active', 'invoiced', 'completed', 'cancelled']
+
+const filters = ref({
+    keyword: '',
+    advisor: '',
+    currentTab: 'active'
+})
 
 // const rowBGColours = [
 //   'rgba(186,255,201,0.3)',
@@ -124,7 +173,8 @@ const trips = ref([])
 onMounted(async () => {
   await axios.get(route('api.trips.index'))
     .then(res => {
-      trips.value = res.data.map(trip => {
+      clientOptions.value = res.data.clientOptions
+      trips.value = res.data.trips.map(trip => {
         // different row background colour based on when the trip start
         const diff = differenceInDays(new Date(trip.start_date), new Date())
         switch (true) {
@@ -154,6 +204,8 @@ onMounted(async () => {
       })
     })
 })
+
+watch(() => filters, () => getAllClients(), { deep: true })
 
 const cancelTrip = async (trip) => {
   await confirmModal(

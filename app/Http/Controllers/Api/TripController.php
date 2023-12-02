@@ -12,12 +12,15 @@ use Illuminate\Support\Facades\DB;
 
 class TripController extends Controller
 {
-    public function index(): Collection
+    public function index()
     {
-        return Trip::with(['tripDays' => fn ($query) => $query->withCarAndTourGuide()])
+        $trips = Trip::with(['tripDays' => fn ($query) => $query->withCarAndTourGuide()])
             ->where('trips.end_date', '>=', now())
             ->orderBy('start_date')
             ->get();
+
+        $clientOptions = Trip::distinct('source')->get()->pluck('source');
+        return \compact('trips', 'clientOptions');
     }
 
     public function destroy(Trip $trip)
@@ -27,9 +30,9 @@ class TripController extends Controller
 
     /**
      * get available cars and tour guides in certain period
-     * 
+     *
      * @param Request $request start date and end date
-     * @return array 
+     * @return array
      */
     public function getAvailableResources(Request $request): array
     {
