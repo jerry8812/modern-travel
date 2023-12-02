@@ -1,10 +1,7 @@
 <template>
   <div class="flex justify-between px-6 py-2 mb-8 border border-gray-200 rounded-lg shadow bg-gray-50">
     <div class="flex w-3/12 p-2">
-      <div class="flex items-center justify-center w-12 h-12 bg-blue-400 rounded-full">
-        <span class="text-xl text-white">{{ currentTourGuide.name.match(/(\b\S)?/g).join("").toUpperCase() }}</span>
-      </div>
-      <div class="pr-10 ml-8 text-lg text-gray-900 xl:pr-0">
+      <div class="pr-10 text-lg text-gray-900 xl:pr-0">
         <div class="mb-2">
           <span class="font-semibold">Name: </span>
           {{ currentTourGuide.name }}
