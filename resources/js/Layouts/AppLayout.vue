@@ -149,14 +149,17 @@
 import { Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverOverlay, PopoverPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 import GlobalSearch from '@/Components/GlobalSearch.vue'
-import { router, Link } from '@inertiajs/vue3';
+import { router, Link, usePage } from '@inertiajs/vue3'
+import { computed } from 'vue'
 
-const navigation = [
-            { name: 'Dashboard', href: route('dashboard'), current: route().current('dashboard') },
-            { name: 'Trips', href: route('trips.index'), current: route().current('rips.index') },
-            { name: 'Tour Guides', href: route('tour-guide'), current: route().current('tour-guide') },
-            { name: 'Rental Cars', href: route('rental-car'), current: route().current('rental-car') }
-        ]
+const navigation = computed(() => {
+    const url = usePage().url
+    return [
+            { name: 'Dashboard', href: route('dashboard'), current: url.startsWith('/dashboard') },
+            { name: 'Trips', href: route('trips.index'), current: url.startsWith('/trips') },
+            { name: 'Tour Guides', href: route('tour-guide'), current: url.startsWith('/tour-guide') },
+            { name: 'Rental Cars', href: route('rental-car'), current: url.startsWith('/rental-car') }
+        ]})
 
 const userNavigation = [
     { name: 'Your profile', href: route('profile.edit') }

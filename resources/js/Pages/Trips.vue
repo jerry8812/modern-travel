@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <title>Trips | Modern Travel</title>
+    </Head>
     <PagePanel>
         <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
         Create Trip
