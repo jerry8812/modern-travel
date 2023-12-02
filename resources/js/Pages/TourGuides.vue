@@ -1,7 +1,12 @@
 <template>
-  <div v-for="tourGuide in tourGuides" :key="tourGuide.id">
-    <TwoMonthsCalendarView :tour-guide="tourGuide" />
-  </div>
+    <Head>
+        <title>Tour Guides | Modern Travel</title>
+    </Head>
+    <PagePanel>
+        <div v-for="tourGuide in tourGuides" :key="tourGuide.id">
+            <TwoMonthsCalendarView :tour-guide="tourGuide" />
+        </div>
+    </PagePanel>
 </template>
 
 <script setup>
@@ -9,6 +14,8 @@ import axios from 'axios'
 
 import { ref, onMounted } from 'vue'
 import TwoMonthsCalendarView from '@/Components/Common/TwoMonthsCalendarView.vue'
+import PagePanel from '@/Components/Common/PagePanel.vue'
+import { Head } from '@inertiajs/vue3';
 
 onMounted(() => {
   getTourGuidesWithSchedulesInCalendarView()
