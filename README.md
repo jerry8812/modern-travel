@@ -9,7 +9,7 @@ Set up and use Laravel sail as per https://laravel.com/docs/10.x/sail
 * Run `cp .env.example .env` to copy `.env.example` to `.env` and set the config values for your environment accordingly. All of these values should already be set up to work with the docker/sail environment.
 
 ## Password
-$2y$12$cNAInnugEjtwwCCvbLKXeOgETGhKKFxODGE0U.c1WVc9zdIfr2R0W
+`$2y$12$cNAInnugEjtwwCCvbLKXeOgETGhKKFxODGE0U.c1WVc9zdIfr2R0W`
 
 ## First-time composer install
 
