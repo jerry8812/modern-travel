@@ -158,7 +158,7 @@ const tabs = ['active', 'invoiced', 'completed', 'cancelled']
 
 const filters = ref({
     keyword: '',
-    advisor: '',
+    client: '',
     currentTab: 'active'
 })
 
