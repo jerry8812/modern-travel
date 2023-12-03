@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <p class="mb-6 text-2xl font-semibold">
-      Create a Trip
-    </p>
+  <PagePanel>
     <div class="w-full px-6 pt-3 pb-4 border-2 rounded-lg shadow-sm border-slate-100">
       <form class="mb-6 space-y-5">
         <div class="grid w-full grid-cols-3 gap-6">
@@ -171,7 +168,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </PagePanel>
 </template>
 
 <script setup>
@@ -181,6 +178,7 @@ import { format, differenceInCalendarDays, addDays } from 'date-fns'
 import { debounce } from 'lodash'
 import { TRIP_BASE } from '@/constants.js'
 
+import PagePanel from '@/Components/Common/PagePanel.vue'
 import SimpleSelect from '@/Components/Common/SimpleSelect.vue'
 import axiosErrorInterceptor from '@/Helpers/errorHandling.js'
 import axios from 'axios'
