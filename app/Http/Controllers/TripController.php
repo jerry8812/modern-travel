@@ -64,6 +64,10 @@ class TripController extends Controller
                 );
             }
 
+            if ($request->total_invoiced) {
+                $trip->invoiced_at = now();
+            }
+
             $trip->save();
 
             // date changes, delete old records
@@ -83,7 +87,7 @@ class TripController extends Controller
                 $day->save();
             }
         });
-        return \redirect(route('dashboard'));
+        return \redirect(route('trips.index'));
     }
 
     private function getTripFormLookups()

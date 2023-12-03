@@ -43,10 +43,10 @@
             >
           </div>
           <div>
-            <label for="status" class="form-label">Status</label>
+            <label for="rental_car_model" class="form-label">Rental Car Model</label>
             <SimpleSelect
-              v-model="tripForm.status"
-              :lookup="tripStatusLookup"
+              v-model="tripForm.rental_car_model"
+              :lookup="['5 Seats', '7 Seats', '8 Seats', '12 Seats', '18 Seats']"
               display-large
             />
           </div>
@@ -61,6 +61,30 @@
               class="border border-gray-300 text-gray-900 rounded-lg focus:border-blue-500 block w-full py-1.5 px-2"
             >
           </div>
+        </div>
+        <div class="grid w-full grid-cols-3 gap-6">
+            <div>
+                <label for="total_invoiced" class="form-label">Invoiced Amount</label>
+                <input
+                        id="total_invoiced"
+                        v-model="tripForm.total_invoiced"
+                        type="number"
+                        min="0"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg
+                        focus:border-blue-500 block w-full py-1.5 px-2"
+                      >
+            </div>
+             <div>
+                <label for="total_cost" class="form-label">Cost Amount</label>
+                <input
+                        id="total_cost"
+                        v-model="tripForm.total_cost"
+                        type="number"
+                        min="0"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg
+                        focus:border-blue-500 block w-full py-1.5 px-2"
+                      >
+            </div>
         </div>
         <div class="grid w-full grid-cols-3 gap-6">
           <div>
@@ -204,7 +228,10 @@ const tripForm = useForm({
   tour_guide: null,
   rental_car: null,
   comment: '',
+  rental_car_model: null,
   trip_days: [],
+  total_invoiced: null,
+  total_cost: null,
   ...props.trip || []
 })
 

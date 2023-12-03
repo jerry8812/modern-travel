@@ -17,7 +17,11 @@ class Trip extends Model
         'status',
         'amount_of_people',
         'total_price',
-        'comment'
+        'comment',
+        'invoiced_at',
+        'total_invoiced',
+        'total_cost',
+        'rental_car_model',
     ];
 
     protected $cast = [
