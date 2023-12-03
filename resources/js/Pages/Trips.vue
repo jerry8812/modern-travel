@@ -5,23 +5,18 @@
     <PagePanel>
         <div class="relative grid items-center gap-2 mb-8 lg:grid-cols-3 sm:gap-4">
             <TextInput
-                v-model="filters.keyword"
                 theme="primary"
-                label="Filter Clients"
+                label="Filter trips"
                 type="text"
                 placeholder="Keyword"
                 @input="keywordHasInput"
             />
-            <!-- advisor dropdown select -->
             <SelectDropdown
                 v-model="filters.client"
                 label="Client"
                 name="clientOptions"
                 :options="clientOptions"
             />
-            <div class="absolute left-0 -bottom-10">
-                <CheckboxField id="is_from_tap" v-model:checked="filters.is_from_tap" theme="primary" label-right="Only clients imported from TAP" />
-            </div>
         </div>
         <div class="hidden sm:block">
             <div class="border-b border-gray-200">
@@ -29,110 +24,112 @@
                     <nav class="mt-2 -mb-px space-x-8" aria-label="Tabs">
                         <a
                             v-for="tab in tabs"
-                            :key="tab"
+                            :key="tab.id"
                             class="cursor-pointer"
-                            :class="[filters.currentTab == tab ? 'border-purple-500 text-purple-600' : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-0.5 px-1 text-sm font-medium']"
-                            @click="filters.currentTab = tab"
+                            :class="[filters.currentTab == tab.id ? 'border-purple-500 text-purple-600' : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-0.5 px-1 text-sm font-medium']"
+                            @click="filters.currentTab = tab.id"
                         >
-                            <span class="capitalize">{{ tab }}</span>
+                            <span class="capitalize">{{ tab.name }}</span>
                         </a>
                     </nav>
                 </div>
             </div>
         </div>
-        <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
-        Create Trip
-        </button>
-        <div class="mt-5 overflow-hidden border rounded-xl">
-        <table class="w-full text-sm text-left text-gray-500 shadow-md">
-            <thead class="text-white uppercase bg-[#34495e] sticky top-0 rounded">
-            <tr class="text-base">
-                <th class="py-4 pl-2">
-                trip number
-                </th>
-                <th class="py-4 pl-2">
-                status
-                </th>
-                <th class="py-4 pl-2">
-                start date
-                </th>
-                <th class="py-4 pl-2">
-                end date
-                </th>
-                <th class="py-4 max-w-[7rem]">
-                Tourists
-                </th>
-                <th class="py-4">
-                total price
-                </th>
-                <th class="py-4 pl-2">
-                source
-                </th>
-                <th class="py-4 pl-2">
-                tour guide
-                </th>
-                <th class="py-4 pl-2">
-                rental car
-                </th>
-                <th class="py-4">
-                Comments
-                </th>
-                <th class="py-4">
-                    Actions
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr
-                v-for="trip in trips"
-                :key="trip.id"
-                class="even:bg-gray-100 font-semibold hover:bg-orange-50 border-b border-gray-300 text-[15px]"
-                :class="[trip.bgColour]"
-            >
-                <td class="px-2 py-4 text-left">
-                {{ trip.trip_number }}
-                </td>
-                <td class="px-2 py-4 text-left">
-                {{ trip.status }}
-                </td>
-                <td class="px-2 py-4 text-left">
-                {{ trip.start_date }}
-                </td>
-                <td class="px-2 py-4 text-left">
-                {{ trip.end_date }}
-                </td>
-                <td class="py-4 text-left">
-                {{ trip.amount_of_people }}
-                </td>
-                <td class="py-4 text-left">
-                {{ formatNZCurrency(trip.total_price) }}
-                </td>
-                <td class="px-2 py-4">
-                {{ trip.source }}
-                </td>
-                <td class="px-2 py-4">
-                {{ trip.tourGuides }}
-                </td>
-                <td class="py-4 pl-4">
-                {{ trip.rentalCars }}
-                </td>
-                <td class="py-4">
-                {{ trip.comment }}
-                </td>
-                <td class="pl-1">
-                    <span
-                        class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
-                        @click="router.get(route('trips.edit', trip.id))"
-                    ><i class="fas fa-calendar-edit" /></span>
-                    <span
-                        class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
-                        @click="cancelTrip(trip)"
-                    >
-                        <i class="fas fa-plane-slash" /></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="mt-4">
+            <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
+            Create Trip
+            </button>
+            <div class="mt-5 overflow-hidden border rounded-xl">
+            <table class="w-full text-sm text-left text-gray-500 shadow-md">
+                <thead class="text-white uppercase bg-[#34495e] sticky top-0 rounded">
+                <tr class="text-base">
+                    <th class="py-4 pl-2">
+                    trip number
+                    </th>
+                    <th class="py-4 pl-2">
+                    status
+                    </th>
+                    <th class="py-4 pl-2">
+                    start date
+                    </th>
+                    <th class="py-4 pl-2">
+                    end date
+                    </th>
+                    <th class="py-4 max-w-[7rem]">
+                    Tourists
+                    </th>
+                    <th class="py-4">
+                    total price
+                    </th>
+                    <th class="py-4 pl-2">
+                    source
+                    </th>
+                    <th class="py-4 pl-2">
+                    tour guide
+                    </th>
+                    <th class="py-4 pl-2">
+                    rental car
+                    </th>
+                    <th class="py-4">
+                    Comments
+                    </th>
+                    <th class="py-4">
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr
+                    v-for="trip in trips"
+                    :key="trip.id"
+                    class="even:bg-gray-100 font-semibold hover:bg-orange-50 border-b border-gray-300 text-[15px]"
+                    :class="[trip.bgColour]"
+                >
+                    <td class="px-2 py-4 text-left">
+                    {{ trip.trip_number }}
+                    </td>
+                    <td class="px-2 py-4 text-left">
+                    {{ trip.status }}
+                    </td>
+                    <td class="px-2 py-4 text-left">
+                    {{ trip.start_date }}
+                    </td>
+                    <td class="px-2 py-4 text-left">
+                    {{ trip.end_date }}
+                    </td>
+                    <td class="py-4 text-left">
+                    {{ trip.amount_of_people }}
+                    </td>
+                    <td class="py-4 text-left">
+                    {{ formatNZCurrency(trip.total_price) }}
+                    </td>
+                    <td class="px-2 py-4">
+                    {{ trip.source }}
+                    </td>
+                    <td class="px-2 py-4">
+                    {{ trip.tourGuides }}
+                    </td>
+                    <td class="py-4 pl-4">
+                    {{ trip.rentalCars }}
+                    </td>
+                    <td class="py-4">
+                    {{ trip.comment }}
+                    </td>
+                    <td class="pl-1">
+                        <span
+                            class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
+                            @click="router.get(route('trips.edit', trip.id))"
+                        ><i class="fas fa-calendar-edit" /></span>
+                        <span
+                            class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
+                            @click="cancelTrip(trip)"
+                        >
+                            <i class="fas fa-plane-slash" /></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         </div>
     </PagePanel>
 </template>
@@ -143,7 +140,7 @@ import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 
 import PagePanel from '@/Components/Common/PagePanel.vue'
-import { uniq, filter } from 'lodash'
+import { uniq, filter, debounce } from 'lodash'
 import { confirmModal } from '@/Helpers/modals.js'
 import { formatNZCurrency } from '@/Helpers/helper.js'
 import { differenceInDays } from 'date-fns'
@@ -154,7 +151,12 @@ import SelectDropdown from '@/Components/Common/Form/SelectDropdown.vue'
 const trips = ref([])
 const clientOptions = ref([])
 
-const tabs = ['active', 'invoiced', 'completed', 'cancelled']
+const tabs = [
+    {id: 'active', name: 'Active'},
+    {id: 'not-invoiced', name: 'Not Invoiced'},
+    {id: 'completed', name: 'Completed'},
+    {id: 'cancelled', name: 'Cancelled'}
+]
 
 const filters = ref({
     keyword: '',
@@ -171,7 +173,11 @@ const filters = ref({
 // ]
 
 onMounted(async () => {
-  await axios.get(route('api.trips.index'))
+    getAllTrips()
+})
+
+const getAllTrips = () => {
+    axios.get(route('api.trips.index', {filters: filters.value}))
     .then(res => {
       clientOptions.value = res.data.clientOptions
       trips.value = res.data.trips.map(trip => {
@@ -203,9 +209,13 @@ onMounted(async () => {
         return trip
       })
     })
-})
+}
 
-watch(() => filters, () => getAllClients(), { deep: true })
+const keywordHasInput = debounce((event) => {
+    filters.value.keyword = event.target.value
+}, 800)
+
+watch(() => filters, () => getAllTrips(), { deep: true })
 
 const cancelTrip = async (trip) => {
   await confirmModal(

@@ -6,20 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\RentalCar;
 use App\Models\TourGuide;
 use App\Models\Trip;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TripController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->filters;
+
         $trips = Trip::with(['tripDays' => fn ($query) => $query->withCarAndTourGuide()])
-            ->where('trips.end_date', '>=', now())
+            ->applyFilters($filters)
             ->orderBy('start_date')
             ->get();
 
-        $clientOptions = Trip::distinct('source')->get()->pluck('source');
+        $clientOptions = Trip::distinct()
+            ->select('source')
+            ->get()
+            ->pluck('source');
+
         return \compact('trips', 'clientOptions');
     }
 

@@ -34,7 +34,7 @@ sail npm run dev
 ```
 
 ## Get live database
-`sail artisan db:wipe && ssh moderntravel@mybud.nz "mysqldump -hmysql57 -ujerrydbuser -pjerrydbuser --column-statistics=0 --no-tablespaces invictacrm" | mysql -hlocalhost -uroot -p --protocol tcp laravel`
+`sail artisan db:wipe && ssh moderntravel@mybud.nz "mysqldump -hmysql57 -ujerrydbuser -pjerrydbuser --column-statistics=0 --no-tablespaces moderntravel" | mysql -hlocalhost -uroot -p --protocol tcp laravel`
 
 ## Reset the DB (local dev)
 `sail artisan migrate:fresh --seed`
