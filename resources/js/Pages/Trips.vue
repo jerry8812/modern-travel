@@ -181,6 +181,11 @@ const getAllTrips = () => {
     .then(res => {
       clientOptions.value = res.data.clientOptions
       trips.value = res.data.trips.map(trip => {
+        if (filters.value.currentTab !== 'active') {
+            trip.status = filters.value.currentTab
+            return trip
+        }
+
         // different row background colour based on when the trip start
         const diff = differenceInDays(new Date(trip.start_date), new Date())
         switch (true) {
