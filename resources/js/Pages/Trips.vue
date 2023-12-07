@@ -1,141 +1,131 @@
 <template>
-    <Head>
-        <title>Trips | Modern Travel</title>
-    </Head>
-    <PagePanel>
-        <div class="relative grid items-center gap-2 mb-8 lg:grid-cols-3 sm:gap-4">
-            <TextInput
-                theme="primary"
-                label="Filter trips"
-                type="text"
-                placeholder="Keyword"
-                @input="keywordHasInput"
-            />
-            <SelectDropdown
-                v-model="filters.client"
-                label="Client"
-                name="clientOptions"
-                :options="clientOptions"
-            />
-        </div>
-        <div class="hidden sm:block">
-            <div class="border-b border-gray-200">
-                <div class="flex items-end justify-between">
-                    <nav class="mt-2 -mb-px space-x-8" aria-label="Tabs">
-                        <a
-                            v-for="tab in tabs"
-                            :key="tab.id"
-                            class="cursor-pointer"
-                            :class="[filters.currentTab == tab.id ? 'border-purple-500 text-purple-600' : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-0.5 px-1 text-sm font-medium']"
-                            @click="filters.currentTab = tab.id"
-                        >
-                            <span class="capitalize">{{ tab.name }}</span>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="mt-4">
+  <Head>
+    <title>Trips | Modern Travel</title>
+  </Head>
+  <PagePanel>
+    <div class="relative grid items-center gap-2 mb-8 lg:grid-cols-3 sm:gap-4">
+      <TextInput
+        theme="primary"
+        label="Filter trips"
+        type="text"
+        placeholder="Keyword"
+        @input="keywordHasInput"
+      />
+      <SelectDropdown
+        v-model="filters.client"
+        label="Client"
+        name="clientOptions"
+        :options="clientOptions"
+      />
+    </div>
+    <div class="hidden sm:block">
+      <div class="border-b border-gray-200">
+        <div class="flex items-end justify-between">
+          <nav class="mt-2 -mb-px space-x-8" aria-label="Tabs">
+            <a
+              v-for="tab in tabs"
+              :key="tab.id"
+              class="cursor-pointer"
+              :class="[filters.currentTab == tab.id
+                ? 'border-purple-500 text-purple-600'
+                : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-0.5 px-1 text-sm font-medium']"
+              @click="filters.currentTab = tab.id"
+            >
+              <span class="capitalize">{{ tab.name }}</span>
+            </a>
+          </nav>
+          <div>
             <button class="btn btn-blue" type="button" @click="router.get(route('create-trip'))">
-            Create Trip
+              <i class="fas fa-plane-departure" /> New Trip
             </button>
-            <div class="mt-5 overflow-hidden border rounded-xl">
-            <table class="w-full text-sm text-left text-gray-500 shadow-md">
-                <thead class="text-white uppercase bg-[#34495e] sticky top-0 rounded">
-                <tr class="text-base">
-                    <th class="py-4 pl-2">
-                    trip number
-                    </th>
-                    <th class="py-4 pl-2">
-                    status
-                    </th>
-                    <th class="py-4 pl-2">
-                    start date
-                    </th>
-                    <th class="py-4 pl-2">
-                    end date
-                    </th>
-                    <th class="py-4 max-w-[7rem]">
-                    Tourists
-                    </th>
-                    <th class="py-4">
-                    total price
-                    </th>
-                    <th class="py-4 pl-2">
-                    source
-                    </th>
-                    <th class="py-4 pl-2">
-                    tour guide
-                    </th>
-                    <th class="py-4 pl-2">
-                    rental car
-                    </th>
-                    <th class="py-4">
-                    Comments
-                    </th>
-                    <th class="py-4">
-                        Actions
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr
-                    v-for="trip in trips"
-                    :key="trip.id"
-                    class="even:bg-gray-100 font-semibold hover:bg-orange-50 border-b border-gray-300 text-[15px]"
-                    :class="[trip.bgColour]"
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div class="mt-5 overflow-hidden border rounded-xl">
+        <table class="w-full text-sm text-left text-gray-500 shadow-md">
+          <thead class="text-white uppercase bg-[#34495e] sticky top-0 rounded">
+            <tr>
+              <th class="py-4 pl-2">
+                start
+              </th>
+              <th class="py-4 pl-2">
+                finish
+              </th>
+              <th class="py-4">
+                price
+              </th>
+              <th class="py-4 pl-2">
+                source
+              </th>
+              <th class="py-4 pl-2">
+                tour guide
+              </th>
+              <th class="py-4 pl-2">
+                rental car
+              </th>
+              <th class="py-4">
+                Tourists
+              </th>
+              <th class="py-4">
+                Comments
+              </th>
+              <th class="py-4" />
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="trip in trips"
+              :key="trip.id"
+              class="even:bg-gray-100 font-semibold hover:bg-orange-50 border-b border-gray-300 text-[15px]"
+              :class="[trip.bgColour]"
+            >
+              <td class="px-2 py-4 text-left">
+                {{ trip.start_date }}
+              </td>
+              <td class="px-2 py-4 text-left">
+                {{ trip.end_date }}
+              </td>
+              <td class="py-4 text-left">
+                {{ formatNZCurrency(trip.total_price) }}
+              </td>
+              <td class="px-2 py-4">
+                {{ trip.source }}
+              </td>
+              <td class="px-2 py-4">
+                {{ trip.tourGuides }}
+              </td>
+              <td class="py-4 pl-4">
+                {{ trip.rentalCars }}
+              </td>
+              <td class="py-4 text-left">
+                {{ trip.amount_of_people }}
+              </td>
+              <td class="py-4 max-w-[8rem] truncate" :title="trip.comment">
+                {{ trip.comment }}
+              </td>
+              <td class="pl-1">
+                <span
+                  class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
+                  @click="router.get(route('trips.edit', trip.id))"
+                ><i class="fas fa-calendar-edit" /></span>
+                <span
+                  class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
+                  @click="cancelTrip(trip)"
                 >
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.trip_number }}
-                    </td>
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.status }}
-                    </td>
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.start_date }}
-                    </td>
-                    <td class="px-2 py-4 text-left">
-                    {{ trip.end_date }}
-                    </td>
-                    <td class="py-4 text-left">
-                    {{ trip.amount_of_people }}
-                    </td>
-                    <td class="py-4 text-left">
-                    {{ formatNZCurrency(trip.total_price) }}
-                    </td>
-                    <td class="px-2 py-4">
-                    {{ trip.source }}
-                    </td>
-                    <td class="px-2 py-4">
-                    {{ trip.tourGuides }}
-                    </td>
-                    <td class="py-4 pl-4">
-                    {{ trip.rentalCars }}
-                    </td>
-                    <td class="py-4">
-                    {{ trip.comment }}
-                    </td>
-                    <td class="pl-1">
-                        <span
-                            class="inline-block text-2xl text-green-600 cursor-pointer hover:scale-110"
-                            @click="router.get(route('trips.edit', trip.id))"
-                        ><i class="fas fa-calendar-edit" /></span>
-                        <span
-                            class="inline-block pl-3 text-2xl text-red-600 cursor-pointer hover:scale-110"
-                            @click="cancelTrip(trip)"
-                        >
-                            <i class="fas fa-plane-slash" /></span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        </div>
-    </PagePanel>
+                  <i class="fas fa-plane-slash" /></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </PagePanel>
 </template>
 
 <script setup>
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3'
 import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 
@@ -152,16 +142,16 @@ const trips = ref([])
 const clientOptions = ref([])
 
 const tabs = [
-    {id: 'active', name: 'Active'},
-    {id: 'not-invoiced', name: 'Not Invoiced'},
-    {id: 'completed', name: 'Completed'},
-    {id: 'cancelled', name: 'Cancelled'}
+  { id: 'active', name: 'Active' },
+  { id: 'not-invoiced', name: 'Not Invoiced' },
+  { id: 'completed', name: 'Completed' },
+  { id: 'cancelled', name: 'Cancelled' }
 ]
 
 const filters = ref({
-    keyword: '',
-    client: '',
-    currentTab: 'active'
+  keyword: '',
+  client: '',
+  currentTab: 'active'
 })
 
 // const rowBGColours = [
@@ -172,18 +162,18 @@ const filters = ref({
 //   'rgba(255,179,186,0.2)'
 // ]
 
-onMounted(async () => {
-    getAllTrips()
+onMounted(() => {
+  getAllTrips()
 })
 
 const getAllTrips = () => {
-    axios.get(route('api.trips.index', {filters: filters.value}))
+  axios.get(route('api.trips.index', { filters: filters.value }))
     .then(res => {
       clientOptions.value = res.data.clientOptions
       trips.value = res.data.trips.map(trip => {
         if (filters.value.currentTab !== 'active') {
-            trip.status = filters.value.currentTab
-            return trip
+          trip.status = filters.value.currentTab
+          return trip
         }
 
         // different row background colour based on when the trip start
@@ -217,7 +207,7 @@ const getAllTrips = () => {
 }
 
 const keywordHasInput = debounce((event) => {
-    filters.value.keyword = event.target.value
+  filters.value.keyword = event.target.value
 }, 800)
 
 watch(() => filters, () => getAllTrips(), { deep: true })
