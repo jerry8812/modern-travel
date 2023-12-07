@@ -231,7 +231,7 @@ const tripForm = useForm({
   rental_car_model: null,
   trip_days: [],
   total_invoiced: null,
-  total_cost: null,
+  total_cost: 0,
   ...props.trip || []
 })
 
