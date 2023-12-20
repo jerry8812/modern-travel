@@ -60,6 +60,9 @@
                 source
               </th>
               <th class="py-4 pl-2">
+                car module
+              </th>
+              <th class="py-4 pl-2">
                 tour guide
               </th>
               <th class="py-4 pl-2">
@@ -92,6 +95,9 @@
               </td>
               <td class="px-2 py-4">
                 {{ trip.source }}
+              </td>
+              <td class="px-2 py-4">
+                {{ trip.rental_car_model }}
               </td>
               <td class="px-2 py-4">
                 {{ trip.tourGuides }}
