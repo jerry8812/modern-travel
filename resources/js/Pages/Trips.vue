@@ -53,6 +53,9 @@
               <th class="py-4 pl-2">
                 finish
               </th>
+              <th class="py-4 pl-2">
+                itinerary
+              </th>
               <th class="py-4">
                 price
               </th>
@@ -89,6 +92,9 @@
               </td>
               <td class="px-2 py-4 text-left">
                 {{ trip.end_date }}
+              </td>
+              <td class="px-2 py-4 text-left">
+                {{ calculateDayDifference(trip.start_date, trip.end_date) }}
               </td>
               <td class="py-4 text-left">
                 {{ formatNZCurrency(trip.total_price) }}
@@ -179,7 +185,7 @@ const getAllTrips = () => {
       trips.value = res.data.trips.map(trip => {
         if (filters.value.currentTab !== 'active') {
           trip.status = filters.value.currentTab
-          return trip
+          // return trip
         }
 
         // different row background colour based on when the trip start
@@ -209,6 +215,7 @@ const getAllTrips = () => {
         }
         return trip
       })
+      console.log("All Trips:", trips.value);
     })
 }
 
@@ -227,4 +234,27 @@ const cancelTrip = async (trip) => {
     trips.value = filter(trips.value, t => t.id !== trip.id)
   })
 }
+
+
+const calculateDayDifference = function (startDate, endDate) {
+    // 将日期字符串转换为 Date 对象，同时忽略时间
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // 将时间部分设置为 00:00:00，以便仅比较日期
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
+    // 获取时间戳（毫秒）
+    const startTime = start.getTime();
+    //console.log('======',startTime,start)
+    const endTime = end.getTime();
+
+    // 计算差值并将其转换为天数
+    const diffTime = endTime - startTime;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+    return diffDays;
+}
+
 </script>

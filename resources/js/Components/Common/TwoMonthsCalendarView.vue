@@ -42,7 +42,7 @@
       <section v-for="(month, monthIdx) in months" :key="monthIdx" :class="[monthIdx === months.length - 1 && 'hidden md:block', 'text-center']">
         <h2 class="text-base font-semibold text-gray-900">
           {{ month.name }}
-        </h2>
+        </h2>ver
         <div class="grid grid-cols-7 mt-6 text-xs leading-4 text-gray-500">
           <div>Mon</div>
           <div>Tue</div>
@@ -61,6 +61,8 @@
                      dayIdx === 6 && 'rounded-tr-lg',
                      dayIdx === month.days.length - 7 && 'rounded-bl-lg',
                      dayIdx === month.days.length - 1 && 'rounded-br-lg', 'relative py-1.5 hover:bg-gray-100 focus:z-10']"
+            @mouseover="showTripTooltip(day)"
+            @mouseout="hideTripTooltip(day)"
           >
             <time
               :datetime="day.date"
@@ -69,6 +71,9 @@
               ]"
             >
               {{ day.date.split('-').pop().replace(/^0/, '') }}</time>
+              <div v-if="day.showTooltip" class="tooltip">                
+                <p><strong>Location:</strong> {{ day.tripInfo.location }}</p>
+              </div>
           </button>
         </div>
       </section>
@@ -94,7 +99,6 @@ const months = computed(() => {
   })
   return months
 })
-
 const sequenceOfMonth = ref(0)
 const currentTourGuide = ref(props.tourGuide)
 
@@ -110,4 +114,35 @@ const showCalendarViewOf = async (monthNumber) => {
       currentTourGuide.value = res.data[0]
     })
 }
+const showTripTooltip = (day) => {
+  if (day.isScheduled) {
+    // 显示当天行程信息
+    day.showTooltip = true;
+    const matchingTrip = currentTourGuide.value.trip_days.find(trip => trip.date === day.date);
+    
+    if (matchingTrip) {
+      // 设置 day.tripInfo，使用匹配到的行程的 location 信息
+      day.tripInfo = {
+        location: matchingTrip.location,
+    }
+  }
+  }
+};
+
+const hideTripTooltip = (day) => {
+  if (day.isScheduled) {
+    // 隐藏提示信息
+    day.showTooltip = false;
+  }
+};
 </script>
+<style scoped>
+.tooltip {
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  
+}
+</style>
